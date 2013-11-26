@@ -9,7 +9,7 @@ At launching, all available units are displayed in the order beginning form the 
 The list of units can be sorted by last message time as well as by name. Furthermore, filtration by days can be applied, i.e., you can get a list of units not sending data for N and more days.
 
 ## License
-LGPL: http://www.gnu.org/licenses/lgpl.html
+[The MIT License](../master/LICENSE-MIT)
 
 ## Requirements
  * Browser: Google Chrome 20+, Firefox 15+, Safari 5+, IE 9+, Opera 10+
