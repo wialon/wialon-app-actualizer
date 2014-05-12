@@ -2,7 +2,7 @@
 	"name": "actualizer",
 	"url_name": "actualizer",
 	"title": "Actualizer",
-	"description": "Detect \"dead units\", i.e., units that have not sent any data for a long period",
+	"description": "Detect \"dead units\", i.e., units that have not sent any data for a long period.",
 	"author": {
 		"name": "Evgeniy Spitsyn"
 	},
@@ -22,20 +22,22 @@
 		"url": "https://github.com/wialon/wialon-app-actualizer"
 	},
 	"modules": [
-		"SDK"
+		"sdk"
 	],
 	"params": [
 		"Active SID",
 		"Base URL",
 		"Host URL",
-		"Language"
+		"Language",
+		"Current user"
 	],
 	"language": [
 		"en",
 		"ru"
 	],
-	"build_date": "2013-11-26",
-	"version": "1.1",
+	"build_date": "2014-05-12",
+	"release_date": "2013-08-30",
+	"version": "1.2",
 	"keywords": [
 		"wialon",
 		"wialon-apps",

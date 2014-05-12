@@ -25,7 +25,8 @@ function getHtmlParameter (name) {
 (function( $ ) {
 	var resources = [];
 	var units = [];
-	var formatTime = "Y.MM.dd&nbsp;&nbsp;HH:mm:ss";
+	var formatTime = ''; 
+
 	/// IE check
 	function ie() {
 		return (navigator.appVersion.indexOf("MSIE 6") != -1 || navigator.appVersion.indexOf("MSIE 7") != -1 || navigator.appVersion.indexOf("MSIE 8") != -1);
@@ -84,26 +85,36 @@ function getHtmlParameter (name) {
 		var spec_unit = {itemsType: "avl_unit", propName: "sys_name", propValueMask: "*", sortType: "sys_last_message"};
 		var flags_unit = wialon.item.Item.dataFlag.base | 1024;
 		wialon.core.Session.getInstance().searchItems(spec_unit, true, flags_unit, 0, 0, function (code, data) {
-			if (code || !data) {
-				alert("List of units empty.");
-			} else if (!data.items || data.items.length < 1) {
-				alert("List of units empty.");
-			} else {
-				units = data.items;
-				units.sort(minmaxmes);
-				var curTime = (new Date().getTime())/1000;
-				for(var i = 0;i<units.length;i++){
-					units[i].days = (units[i].getLastMessage())?parseInt((curTime-units[i].getLastMessage().t)/(60*60*24)):0;
-				}
 
-				if (!isrefresh) {
-					$("#messages-col").toggleClass("desc");
-					$("#paginated-table").dividedByPages(units, fill_table);
-				} else {
-					// $("#paginated-table").trigger("refresh", {data: units});
-					daysFilter(units, parseInt($("#days").text() || 0));
-				}
-			}
+            // get string of time format
+            wialon.core.Session.getInstance().getCurrUser().getLocale(function(arg, locale){
+
+                var fd = (locale && locale.fd) ? locale.fd : '%Y-%m-%E_%H:%M:%S'; // check for users who have never changed the parameters of the metric
+
+                formatTime = wialon.util.DateTime.convertFormat(fd,true).replace(/_/, '&nbsp;&nbsp;').replace(/ /, '&nbsp;');
+	            setLocaleDateTime();
+
+                if (code || !data) {
+                    alert("List of units empty.");
+                } else if (!data.items || data.items.length < 1) {
+                    alert("List of units empty.");
+                } else {
+                    units = data.items;
+                    units.sort(minmaxmes);
+                    var curTime = (new Date().getTime())/1000;
+                    for(var i = 0;i<units.length;i++){
+                        units[i].days = (units[i].getLastMessage())?parseInt((curTime-units[i].getLastMessage().t)/(60*60*24)):0;
+                    }
+
+                    if (!isrefresh) {
+                        $("#messages-col").toggleClass("desc");
+                        $("#paginated-table").dividedByPages(units, fill_table);
+                    } else {
+                        // $("#paginated-table").trigger("refresh", {data: units});
+                        daysFilter(units, parseInt($("#days").text() || 0));
+                    }
+                }
+            });
 		});
 	}
 
@@ -114,8 +125,15 @@ function getHtmlParameter (name) {
 			url = get_html_var("hostUrl");
 		if (!url)
 			return;
-		wialon.core.Session.getInstance().initSession(url);
-		wialon.core.Session.getInstance().duplicate(get_html_var("sid"), "", true, login);
+
+		var user = get_html_var("user");
+		user = (user) ? user : "";
+		// if(!user)
+			// return null;
+		
+		wialon.core.Session.getInstance().initSession(url, "", 0x800);
+		wialon.core.Session.getInstance().duplicate(get_html_var("sid"), user, true, login);
+
 	}
 	function ltranslate () {
 		$("#app-name").html($.localise.tr("Actualizer"));
@@ -270,5 +288,57 @@ function getHtmlParameter (name) {
 		var row = "<tr id='unit_" + item.getId() + "' class='" + (sindex%2?'odd':'') + "'><td><span class='number'>" + (sindex++ +1) + ".</span></td><td><span class='unitName'>" + item.getName() + "</span></td><td>" + ((item.getLastMessage())?(wialon.util.DateTime.formatTime(item.getLastMessage().t, 0, formatTime)):('<span class="no-mess">' + $.localise.tr('No messages') + '</span>')) + "</td><td><span class='cnt'>" + (item.days?item.days:(item.getLastMessage()?0:'-')) + "</span></td></tr>";
 		$("#paginated-table").children("tbody").append(row);
 		return sindex;
+	}
+
+
+	/// set Locale Date Time
+	function setLocaleDateTime () {
+	    var days = [
+	            $.localise.tr("Sunday"),
+	            $.localise.tr("Monday"),
+	            $.localise.tr("Tuesday"),
+	            $.localise.tr("Wednesday"),
+	            $.localise.tr("Thursday"),
+	            $.localise.tr("Friday"),
+	            $.localise.tr("Saturday")
+	        ],
+	        months = [
+	            $.localise.tr("January"),
+	            $.localise.tr("February"),
+	            $.localise.tr("March"),
+	            $.localise.tr("April"),
+	            $.localise.tr("May"),
+	            $.localise.tr("June"),
+	            $.localise.tr("July"),
+	            $.localise.tr("August"),
+	            $.localise.tr("September"),
+	            $.localise.tr("October"),
+	            $.localise.tr("November"),
+	            $.localise.tr("December")
+	        ],
+	        days_abbrev = [
+	            $.localise.tr("Sun"),
+	            $.localise.tr("Mon"),
+	            $.localise.tr("Tue"),
+	            $.localise.tr("Wed"),
+	            $.localise.tr("Thu"),
+	            $.localise.tr("Fri"),
+	            $.localise.tr("Sat")
+	        ],
+	        months_abbrev = [
+	            $.localise.tr("Jan"),
+	            $.localise.tr("Feb"),
+	            $.localise.tr("Mar"),
+	            $.localise.tr("Apr"),
+	            $.localise.tr("May"),
+	            $.localise.tr("Jun"),
+	            $.localise.tr("Jul"),
+	            $.localise.tr("Aug"),
+	            $.localise.tr("Sep"),
+	            $.localise.tr("Oct"),
+	            $.localise.tr("Nov"),
+	            $.localise.tr("Dec")
+	        ];
+	    wialon.util.DateTime.setLocale(days, months, days_abbrev, months_abbrev);
 	}
 }) ( jQuery );

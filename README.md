@@ -1,4 +1,4 @@
-# Actualizer, version 1.1: (August 30, 2013)
+# Actualizer, version 1.2: (May 12, 2014)
 This is WEB application based on Apps from Gurtam (http://apps.wialon.com).
 
 ## Description
@@ -22,4 +22,10 @@ Apps activation through the management system: http://docs.gurtam.com/en/hosting
 Working with applications in the GPS tracking system: http://docs.gurtam.com/en/hosting/user/apps/apps
 
 ## Release History
- * 2013-08-30   v1.1   initial release
+ * v1.1 (August 30, 2013)  
+- initial release
+
+ * v1.2 (May 12, 2014)
+- US metrics added
+- time mask added
+- fixed user authentication
