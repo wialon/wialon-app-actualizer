@@ -1,56 +1,68 @@
 {
-	"name": "actualizer",
-	"url_name": "actualizer",
-	"title": "Actualizer",
-	"description": "Detect \"dead units\", i.e., units that have not sent any data for a long period.",
-	"author": {
-		"name": "Evgeniy Spitsyn"
-	},
-	"licenses": [
-		{
-			"type":" MIT",
-			"url": "https://github.com/wialon/wialon-app-actualizer/blob/master/LICENSE-MIT"
-		}
-	],
-	"dependencies": {
-		"jquery": "1.10.2",
-		"jquery.ui": "1.10.3",
-		"jquery.localisation": "1.1.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/wialon/wialon-app-actualizer"
-	},
-	"modules": [
-		"sdk"
-	],
-	"params": [
-		"Active SID",
-		"Base URL",
-		"Host URL",
-		"Language",
-		"Current user"
-	],
-	"language": [
-		"en",
-		"ru"
-	],
-	"build_date": "2014-05-12",
-	"release_date": "2013-08-30",
-	"version": "1.2",
-	"keywords": [
-		"wialon",
-		"wialon-apps",
-		"dead units"
-	],
-	"browser": {
-		"ie": "9+",
-		"opera": "10+",
-		"safari": "10+",
-		"chrome": "20+",
-		"firefox": "15+"
-	},
-	"logo": "logo.png",
-	"images_path": "images",
-	"desc_path": "desc"
+    "deprecated": true,
+    "name": "actualizer",
+    "url_name": "actualizer",
+    "title": "Actualizer",
+    "description": "Detect \"dead units\", i.e., units that have not sent any data for a long period.",
+    "author": {
+        "name": ""
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/wialon/wialon-app-actualizer/blob/master/LICENSE-MIT"
+        }
+    ],
+    "dependencies": {
+        "jquery": "1.10.2",
+        "jquery.ui": "1.10.3",
+        "jquery.localisation": "1.1.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wialon/wialon-app-actualizer"
+    },
+    "modules": [
+        "sdk"
+    ],
+    "params": [
+        "Active SID",
+        "Base URL",
+        "Host URL",
+        "Language",
+        "Current user"
+    ],
+    "docs": [],
+    "language": [
+        "en",
+        "br",
+        "cs",
+        "es",
+        "fa",
+        "fi",
+        "fr",
+        "it",
+        "pl",
+        "ru",
+        "sk",
+        "sq",
+        "uk"
+    ],
+    "build_date": "2026-11-20",
+    "release_date": "2013-08-30",
+    "version": "1.4.0",
+    "keywords": [
+        "wialon",
+        "wialon-apps",
+        "dead units"
+    ],
+    "browser": {
+        "ie": "9+",
+        "opera": "10+",
+        "safari": "10+",
+        "chrome": "20+",
+        "firefox": "15+"
+    },
+    "logo": "logo.png",
+    "desc_path": "desc"
 }

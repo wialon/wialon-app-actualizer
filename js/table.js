@@ -62,7 +62,7 @@
 				}
 			}
 			$("#units-col-head").css("width",max_width + 50);
-		};
+		}
 
 		function updatePageState () {
 			var ifrom = cPage * maxRows - maxRows + 1;

@@ -1,29 +1,13 @@
-<!-- ************************************************************************
-
-   Apps - WEB applications, developed on the basis of SDK for Wialon Hosting and Wialon Kit.
-
-   http://apps.wialon.com
-
-   Copyright:
-     2002-2013 Gurtam, http://gurtam.com
-
-   License:
-     MIT: https://github.com/wialon/wialon-app-actualizer/blob/master/LICENSE-MIT
-
-   Authors:
-     * Gurtam
-
-************************************************************************ -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-	<title>Actualizer</title>
+	<link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+	<title></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta http-equiv="pragma" content="no-cache"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	<script type="text/javascript" src="./js/jquery-1.10.2.min.js"></script>
 	<script src="./js/jquery-ui-1.10.3.custom.min.js"></script>
 	<link href="./css/jquery-ui-1.10.3.custom.css" rel="stylesheet">
@@ -31,10 +15,47 @@
 	<script type="text/javascript" src="./js/jquery.localisation.js"></script>
 	<script type="text/javascript" src="./js/table.js"></script>
 	<script type="text/javascript" src="./js/main.js"></script>
+	<script>
+		var availableLanguages=null;
+		var documentationLink="https://help.wialon.com/help/applications/en/user-guide/actualizer";
+		var is_white=null;
+		var APP_CONFIG = {};
+
+		function loadAppConfigSync() {
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", "/actualizer/app/app.json", false);
+			xhr.send();
+			if (xhr.status === 200) {
+				var data = JSON.parse(xhr.responseText);
+				is_white = false;
+				document.title = decodeURIComponent(data.title || "Actualizer");
+				availableLanguages = data.language || null;
+			}
+
+			xhr.open("GET", "/actualizer/whitelabel.json", false);
+			xhr.send();
+			if (xhr.status === 200) {
+				var data = JSON.parse(xhr.responseText);
+				if (data.hasOwnProperty('IS_WHITELABEL')) {
+					is_white = data.IS_WHITELABEL === false ? false : true;
+				}
+				if (data.hasOwnProperty('alias')) {
+					document.title = decodeURIComponent(data.alias) || "Actualizer";
+				}
+				if (data.hasOwnProperty('help_url_link')) {
+					documentationLink = decodeURIComponent(data.help_url_link);
+				}
+				APP_CONFIG = data;
+			}
+		}
+		loadAppConfigSync();
+	</script>
 </head>
 <body>
 	<div id="header">
-		<img id="logo" src="./img/logo.png" alt="Actualizer" /> <span id="app-name">Actualizer</span>
+		<img id="logo" src="./img/logo.svg"/>
+		<span id="app-name"></span>
+		<span id="help"></span>
 	</div>
 	<div id="table-wrap">
 
@@ -43,7 +64,9 @@
 				<tr>
 					<th scope="col" id="id-col-head"></th>
 					<th scope="col" id="units-col-head"><span id="units-col">Unit</span><span id="refresh-btn"><img src="./img/refresh.png" alt="Refresh"></span></th>
+					<th scope="col" id="account-col-head"><span id="account-col" class="desc">Account</span></th>
 					<th scope="col" id="messages-col-head"><span id="messages-col" class="desc">Last Message</span></th>
+					<th scope="col" id="lastposition-col-head"><span id="lastposition-col" class="desc">Last Position</span></th>
 					<th scope="col" id="days-count-col-head">
 						<div id="slider-button"></div>
 						<div class="input-slider" id="days-filter">
@@ -51,6 +74,7 @@
 						</div>
 						<span id="days"></span> <span id="days-head">Days</span>
 					</th>
+					<th scope="col" id="geofences-head">Geofence</th>
 				</tr>
 			</thead>
 			<tbody></tbody>
@@ -66,7 +90,7 @@
 					<option value="50">50</option>
 					<option value="100">100</option>
 					<option value="250">250</option>
-					<option value="1000">500</option>
+					<option value="1000">1000</option>
 				</select>
 			</span>
 

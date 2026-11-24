@@ -1,16 +1,15 @@
-TRANSLATIONS = {
-	"Actualizer" : "Actualizer",
-	"Unit" : "Unit",
-	"Last Message" : "Last Message",
-	"Page" : "Page&nbsp;",
-	"of" : "&nbsp;of&nbsp;",
-	"Refresh" : "Refresh",
-	"Displaying" : "Displaying&nbsp;",
-	"to" : "&nbsp;to&nbsp;",
-	"items" : "&nbsp;items",
-	"No messages" : "No messages",
-	"Days": "Days",
-
+{
+    "Actualizer": "Actualizer",
+    "Unit": "Unit",
+    "Last Message": "Last Message",
+    "Page": "Page&nbsp;",
+    "of": "&nbsp;of&nbsp;",
+    "Refresh": "Refresh",
+    "Displaying": "Displaying&nbsp;",
+    "to": "&nbsp;to&nbsp;",
+    "items": "&nbsp;items",
+    "No messages": "No messages",
+    "Days": "Days",
     "Sunday": "",
     "Monday": "",
     "Tuesday": "",
@@ -18,7 +17,6 @@ TRANSLATIONS = {
     "Thursday": "",
     "Friday": "",
     "Saturday": "",
-
     "January": "",
     "February": "",
     "March": "",
@@ -31,7 +29,6 @@ TRANSLATIONS = {
     "October": "",
     "November": "",
     "December": "",
-
     "Sun": "",
     "Mon": "",
     "Tue": "",
@@ -39,7 +36,6 @@ TRANSLATIONS = {
     "Thu": "",
     "Fri": "",
     "Sat": "",
-
     "Jan": "",
     "Feb": "",
     "Mar": "",
@@ -50,5 +46,9 @@ TRANSLATIONS = {
     "Sep": "",
     "Oct": "",
     "Nov": "",
-    "Dec": ""
-};
+    "Dec": "",
+    "Account": "Account",
+    "Last Position": "Last Position",
+    "Resolving...": "Resolving...",
+    "Geofences": ""
+}

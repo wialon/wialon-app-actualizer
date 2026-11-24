@@ -45,6 +45,8 @@
                      function receives package name as its parameter, 'this' is window -
                      omit this if settings is an object */
 $.localise = function(packages, settings, loadBase, path, timeout, async, complete) {
+	window.TRANSLATIONS = window.TRANSLATIONS || {};
+
 	if (typeof settings != 'object' && typeof settings != 'string') {
 		complete = async;
 		async = timeout;
@@ -81,30 +83,44 @@ $.localise = function(packages, settings, loadBase, path, timeout, async, comple
 		timeout: timeout, async: async, complete: complete});
 	var paths = (!settings.path ? ['', ''] :
 		($.isArray(settings.path) ? settings.path : [settings.path, settings.path]));
-	var opts = {async: settings.async, dataType: 'script', timeout: settings.timeout};
+	var opts = {async: settings.async, dataType: 'json', timeout: settings.timeout};
+	
 	var localisePkg = function(pkg, lang) {
 		var files = [];
+
 		if (settings.loadBase) {
-			files.push(paths[0] + pkg + '.js');
+			files.push(paths[0] + pkg + '.json');
 		}
+
 		if (lang.length >= 2) {
-			files.push(paths[1] + pkg + lang.substring(0, 2) + '.js');
+			files.push(paths[1] + pkg + lang.substring(0, 2) + '.json');
 		}
+
 		if (lang.length >= 5) {
-			files.push(paths[1] + pkg + lang.substring(0, 5) + '.js');
+			files.push(paths[1] + pkg + lang.substring(0, 5) + '.json');
 		}
+
 		var loadFile = function() {
-			$.ajax($.extend(opts, {url: files.shift(), complete: function() {
-				if (files.length == 0) {
-					if ($.isFunction(settings.complete)) {
-						settings.complete.apply(window, [pkg]);
+			$.ajax($.extend(opts, {
+				url: files.shift(), 
+				complete: function() {
+					if (files.length == 0) {
+						if ($.isFunction(settings.complete)) {
+							settings.complete.apply(window, [pkg]);
+						}
+					}
+					else {
+						loadFile();
+					}
+				},
+				success: function(data) {
+					if (data) {
+						$.extend(TRANSLATIONS, data);
 					}
 				}
-				else {
-					loadFile();
-				}
-			}}));
+			}));
 		};
+
 		loadFile();
 	};
 	var lang = normaliseLang(settings.language || $.localise.defaultLanguage);
